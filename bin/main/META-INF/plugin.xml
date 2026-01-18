@@ -10,8 +10,9 @@
     <b>Features:</b>
     <ul>
         <li>Navigate to Hytale API source code with Ctrl+Click</li>
-        <li>Plugin manifest (manifest.json) support</li>
-        <li>Project templates for Hytale plugins</li>
+        <li>Plugin manifest (manifest.json) support with JSON schema</li>
+        <li>Auto-detection of HytaleServer.jar from Flatpak installation</li>
+        <li>Hytale facet for project configuration</li>
         <li>Code completion for Hytale API</li>
     </ul>
     ]]></description>
@@ -20,10 +21,42 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
     <depends>ByteCodeViewer</depends>
+    <depends>com.intellij.modules.json</depends>
 
     <resource-bundle>messages.HytaleBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
+        <!-- Startup Activity - Initialize plugin on project open -->
         <postStartupActivity implementation="com.criticalrange.hytaledev.startup.HytaleProjectActivity"/>
+
+        <!-- Facet Detection - Auto-detect Hytale projects -->
+        <postStartupActivity implementation="com.criticalrange.hytaledev.facet.HytaleFacetDetector"/>
+
+        <!-- Facet Type - Hytale development facet -->
+        <facetType implementation="com.criticalrange.hytaledev.facet.HytaleFacetType"/>
+
+        <!-- Library Detection - Recognize HytaleServer.jar -->
+        <library.presentationProvider implementation="com.criticalrange.hytaledev.library.HytalePresentationProvider"/>
+
+        <!-- Source Attachment - Decompilation support -->
+        <attachSourcesProvider implementation="com.criticalrange.hytaledev.source.HytaleAttachSourcesProvider"/>
+
+        <!-- JSON Reference - Navigate from manifest.json to classes -->
+        <psi.referenceContributor language="JSON"
+                                  implementation="com.criticalrange.hytaledev.manifest.ManifestJsonReferenceContributor"/>
+
+        <!-- JSON Schema - Validation and completion for manifest.json -->
+        <json.jsonSchemaProviderFactory
+                implementation="com.criticalrange.hytaledev.manifest.ManifestJsonSchemaProviderFactory"/>
+
+        <!-- Project Service -->
+        <projectService serviceImplementation="com.criticalrange.hytaledev.services.HytaleProjectService"/>
+
+        <!-- Library Manager Service -->
+        <projectService serviceImplementation="com.criticalrange.hytaledev.library.HytaleLibraryManager"/>
+        <!-- Notification Group -->
+        <notificationGroup id="Hytale Development"
+                           displayType="BALLOON"
+                           key="notification.group.name"/>
     </extensions>
 </idea-plugin>

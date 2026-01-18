@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://hytalemodding.dev/schemas/manifest.json",
+  "title": "Hytale Plugin Manifest",
+  "description": "Schema for Hytale plugin manifest.json files",
+  "type": "object",
+  "required": ["Group", "Name", "Version", "Main"],
+  "properties": {
+    "Group": {
+      "type": "string",
+      "description": "The group/organization identifier (e.g., 'dev.hytalemodding')",
+      "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)*$",
+      "examples": ["dev.hytalemodding", "com.example"]
+    },
+    "Name": {
+      "type": "string",
+      "description": "The plugin name",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+      "examples": ["ExamplePlugin", "MyAwesomePlugin"]
+    },
+    "Version": {
+      "type": "string",
+      "description": "The plugin version (semver recommended)",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9.]+)?$",
+      "examples": ["1.0.0", "2.1.0-beta.1"]
+    },
+    "Description": {
+      "type": "string",
+      "description": "A brief description of the plugin",
+      "examples": ["An example plugin for Hytale"]
+    },
+    "Authors": {
+      "type": "array",
+      "description": "List of plugin authors",
+      "items": {
+        "type": "object",
+        "required": ["Name"],
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Author's name"
+          },
+          "Email": {
+            "type": "string",
+            "format": "email",
+            "description": "Author's email address"
+          }
+        }
+      }
+    },
+    "Main": {
+      "type": "string",
+      "description": "Fully qualified name of the main plugin class",
+      "pattern": "^[a-z][a-z0-9]*(\\.[a-zA-Z][a-zA-Z0-9]*)*$",
+      "examples": ["dev.hytalemodding.ExamplePlugin"]
+    },
+    "ServerVersion": {
+      "type": "string",
+      "description": "Required server version (* for any)",
+      "default": "*",
+      "examples": ["*", "1.0.0", ">=1.0.0"]
+    },
+    "Dependencies": {
+      "type": "object",
+      "description": "Required plugin dependencies (name -> version)",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "OptionalDependencies": {
+      "type": "object",
+      "description": "Optional plugin dependencies (name -> version)",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

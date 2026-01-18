@@ -31,6 +31,11 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/version_catalogs.html
 dependencies {
+    // ASM for bytecode analysis
+    implementation(libs.asm)
+    implementation(libs.asm.tree)
+    implementation(libs.asm.util)
+
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
 

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- Manifest.json icon -->
+  <defs>
+    <linearGradient id="manifestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5A623"/>
+      <stop offset="100%" style="stop-color:#D4880F"/>
+    </linearGradient>
+  </defs>
+  <!-- Document shape -->
+  <path d="M3 1h7l3 3v11H3V1z" fill="url(#manifestGrad)"/>
+  <path d="M10 1v3h3" fill="#FFFFFF" opacity="0.5"/>
+  <!-- JSON brackets -->
+  <text x="5" y="11" font-family="monospace" font-size="7" fill="#FFFFFF">{}</text>
+</svg>
