@@ -91,5 +91,10 @@
                          enabledByDefault="true"
                          level="WARNING"
                          implementationClass="com.criticalrange.hytaledev.inspection.PluginClassInspection"/>
+
+        <!-- Dependency Support - IDE will suggest this plugin when Hytale dependencies are detected -->
+        <dependencySupport kind="java"
+                           coordinate="com.hypixel.hytale:*"
+                           displayName="Hytale Server API"/>
     </extensions>
 </idea-plugin>
