@@ -1,0 +1,21 @@
+<html>
+<body>
+<p>Validates that Hytale plugin classes are properly structured.</p>
+
+<p>This inspection checks plugin classes that extend <code>PluginBase</code> or <code>JavaPlugin</code>:</p>
+<ul>
+    <li>The class should not be abstract</li>
+    <li>The class must have a constructor that accepts <code>JavaPluginInit</code> parameter</li>
+    <li>The class should not be private</li>
+</ul>
+
+<p><b>Example of valid plugin class:</b></p>
+<pre>
+public class MyPlugin extends JavaPlugin {
+    public MyPlugin(JavaPluginInit init) {
+        super(init);
+    }
+}
+</pre>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+<body>
+<p>Validates that the <code>Main</code> class specified in <code>manifest.json</code> is valid.</p>
+
+<p>This inspection checks that:</p>
+<ul>
+    <li>The specified class exists in the project</li>
+    <li>The class extends <code>PluginBase</code> or <code>JavaPlugin</code></li>
+    <li>The class is not abstract</li>
+    <li>The class has a valid constructor (accepts <code>JavaPluginInit</code> parameter)</li>
+</ul>
+
+<p><b>Example of valid manifest.json:</b></p>
+<pre>
+{
+    "Main": "com.example.MyPlugin"
+}
+</pre>
+
+<p>Where <code>MyPlugin</code> extends <code>JavaPlugin</code> and has the required constructor.</p>
+</body>
+</html>

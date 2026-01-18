@@ -1,0 +1,23 @@
+<html>
+<body>
+<p>Validates that all required fields are present and properly formatted in <code>manifest.json</code>.</p>
+
+<p><b>Required fields:</b></p>
+<ul>
+    <li><code>Group</code> - Package name format (lowercase, dot-separated, e.g., <code>com.example</code>)</li>
+    <li><code>Name</code> - Plugin name (alphanumeric, may include dashes/underscores)</li>
+    <li><code>Version</code> - Semantic version (e.g., <code>1.0.0</code> or <code>1.0.0-beta.1</code>)</li>
+    <li><code>Main</code> - Fully qualified class name of the plugin entry point</li>
+</ul>
+
+<p><b>Example of valid manifest.json:</b></p>
+<pre>
+{
+    "Group": "com.example",
+    "Name": "MyPlugin",
+    "Version": "1.0.0",
+    "Main": "com.example.MyPlugin"
+}
+</pre>
+</body>
+</html>

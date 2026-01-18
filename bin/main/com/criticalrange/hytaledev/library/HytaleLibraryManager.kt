@@ -2,7 +2,8 @@ package com.criticalrange.hytaledev.library
 
 import com.criticalrange.hytaledev.util.HytaleConstants
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.WriteAction
+import com.intellij.openapi.application.EDT
+import com.intellij.openapi.application.writeAction
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
@@ -13,6 +14,8 @@ import com.intellij.openapi.roots.libraries.LibraryTablesRegistrar
 import com.intellij.openapi.vfs.JarFileSystem
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.nio.file.Path
 
 /**
@@ -61,11 +64,10 @@ class HytaleLibraryManager(private val project: Project) {
     }
 
     /**
-     * Registers HytaleServer.jar as a project library.
+     * Registers HytaleServer.jar as a project library (suspend version for coroutines).
      * Returns the created library, or null if registration failed.
-     * Must be called from EDT or will invoke on EDT.
      */
-    fun registerLibrary(serverJarPath: Path): Library? {
+    suspend fun registerLibrarySuspend(serverJarPath: Path): Library? {
         if (isLibraryRegistered()) {
             logger.info("Hytale library already registered")
             return getHytaleLibrary()
@@ -77,11 +79,8 @@ class HytaleLibraryManager(private val project: Project) {
             return null
         }
 
-        var result: Library? = null
-
-        // Use invokeAndWait to ensure we're on EDT for write action
-        ApplicationManager.getApplication().invokeAndWait {
-            WriteAction.run<Throwable> {
+        return withContext(Dispatchers.EDT) {
+            writeAction {
                 try {
                     val libraryTable = LibraryTablesRegistrar.getInstance().getLibraryTable(project)
                     val library = libraryTable.createLibrary(HYTALE_LIBRARY_NAME)
@@ -99,14 +98,13 @@ class HytaleLibraryManager(private val project: Project) {
 
                     modifiableModel.commit()
                     logger.info("Successfully registered Hytale library")
-                    result = library
+                    library
                 } catch (e: Exception) {
                     logger.error("Failed to register Hytale library", e)
+                    null
                 }
             }
         }
-
-        return result
     }
 
     /**
@@ -126,16 +124,60 @@ class HytaleLibraryManager(private val project: Project) {
     }
 
     /**
-     * Auto-detects and registers the Hytale library if found.
+     * Adds the Hytale library as a dependency to the given module (suspend version).
+     * The library must already be registered in the project.
+     * Returns true if successfully added.
+     */
+    suspend fun addLibraryToModuleSuspend(module: com.intellij.openapi.module.Module): Boolean {
+        val library = getHytaleLibrary()
+        if (library == null) {
+            logger.warn("Cannot add library to module - Hytale library not registered")
+            return false
+        }
+
+        if (hasHytaleDependency(module)) {
+            logger.info("Module ${module.name} already has Hytale library dependency")
+            return true
+        }
+
+        return withContext(Dispatchers.EDT) {
+            writeAction {
+                try {
+                    val rootModel = ModuleRootManager.getInstance(module).modifiableModel
+                    rootModel.addLibraryEntry(library)
+                    rootModel.commit()
+                    logger.info("Added Hytale library to module: ${module.name}")
+                    true
+                } catch (e: Exception) {
+                    logger.error("Failed to add Hytale library to module ${module.name}", e)
+                    false
+                }
+            }
+        }
+    }
+
+    /**
+     * Auto-detects, registers the Hytale library, and adds it to the given module (suspend version).
+     * Returns true if successful.
+     */
+    suspend fun autoDetectRegisterAndAddToModuleSuspend(module: com.intellij.openapi.module.Module): Boolean {
+        if (!autoDetectAndRegisterSuspend()) {
+            return false
+        }
+        return addLibraryToModuleSuspend(module)
+    }
+
+    /**
+     * Auto-detects and registers the Hytale library if found (suspend version).
      * Returns true if the library was found and registered (or already exists).
      */
-    fun autoDetectAndRegister(): Boolean {
+    suspend fun autoDetectAndRegisterSuspend(): Boolean {
         if (isLibraryRegistered()) {
             return true
         }
 
         val serverJar = detectServerJar() ?: return false
-        return registerLibrary(serverJar) != null
+        return registerLibrarySuspend(serverJar) != null
     }
 
     /**
