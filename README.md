@@ -1,21 +1,18 @@
-# IntelliJ Platform Plugin Template
+# Hytale Development Plugin
 
-[![official JetBrains project](https://jb.gg/badges/official.svg)][jb:github]
-[![Twitter Follow](https://img.shields.io/badge/follow-%40JBPlatform-1DA1F2?logo=twitter)](https://x.com/JBPlatform)
-[![Build](https://github.com/JetBrains/intellij-platform-plugin-template/workflows/Build/badge.svg)][gh:build]
+IntelliJ IDEA plugin for Hytale server plugin development, inspired by the Minecraft Development plugin.
 
-![IntelliJ Platform Plugin Template][file:intellij-platform-plugin-template-dark]
-![IntelliJ Platform Plugin Template][file:intellij-platform-plugin-template-light]
-
-> [!NOTE]
-> Click the <kbd>Use this template</kbd> button and clone it in IntelliJ IDEA.
+[![Build](https://github.com/criticalrange/hytale-development-plugin/workflows/Build/badge.svg)][gh:build]
 
 <!-- Plugin description -->
-**IntelliJ Platform Plugin Template** is a repository that provides a pure template to make it easier to create a new plugin project (check the [Creating a repository from a template][gh:template] article).
+**Hytale Development** is a modding plugin for Hytale with code navigation, API completion, and project templates.
 
-The main goal of this template is to speed up the setup phase of plugin development for both new and experienced developers by preconfiguring the project scaffold and CI, linking to the proper documentation pages, and keeping everything organized.
+**Features:**
+- Navigate to Hytale API source code with Ctrl+Click
+- Plugin manifest (manifest.json) support  
+- Project templates for Hytale plugins
+- Code completion for Hytale API
 
-[gh:template]: https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 <!-- Plugin description end -->
 
 If you're still not quite sure what this is all about, read our introduction: [What is the IntelliJ Platform?][docs:intro]
