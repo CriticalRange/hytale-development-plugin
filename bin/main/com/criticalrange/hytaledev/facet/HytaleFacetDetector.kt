@@ -39,10 +39,12 @@ class HytaleFacetDetector : ProjectActivity {
             }
         }
 
-        // Try to auto-detect and register the Hytale library
+        // Just detect the library location - don't auto-register
+        // (registration should be done when user explicitly adds the library or creates a Hytale project)
         val libraryManager = HytaleLibraryManager.getInstance(project)
-        if (libraryManager.autoDetectAndRegister()) {
-            logger.info("Hytale library auto-detected and registered")
+        val serverJar = libraryManager.detectServerJar()
+        if (serverJar != null) {
+            logger.info("Hytale server JAR available at: $serverJar")
         }
     }
 

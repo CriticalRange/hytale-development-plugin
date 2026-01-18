@@ -41,6 +41,10 @@
         <!-- Source Attachment - Decompilation support -->
         <attachSourcesProvider implementation="com.criticalrange.hytaledev.source.HytaleAttachSourcesProvider"/>
 
+        <!-- Navigation - Ctrl+Click on Hytale API classes -->
+        <gotoDeclarationHandler implementation="com.criticalrange.hytaledev.navigation.HytaleGotoDeclarationHandler"
+                                order="first"/>
+
         <!-- JSON Reference - Navigate from manifest.json to classes -->
         <psi.referenceContributor language="JSON"
                                   implementation="com.criticalrange.hytaledev.manifest.ManifestJsonReferenceContributor"/>
