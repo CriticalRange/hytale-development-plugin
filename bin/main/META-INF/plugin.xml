@@ -45,6 +45,10 @@
         <gotoDeclarationHandler implementation="com.criticalrange.hytaledev.navigation.HytaleGotoDeclarationHandler"
                                 order="first"/>
 
+        <!-- Line Markers - Gutter icons for plugin classes -->
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.criticalrange.hytaledev.insight.PluginLineMarkerProvider"/>
+
         <!-- JSON Reference - Navigate from manifest.json to classes -->
         <psi.referenceContributor language="JSON"
                                   implementation="com.criticalrange.hytaledev.manifest.ManifestJsonReferenceContributor"/>
@@ -62,5 +66,30 @@
         <notificationGroup id="Hytale Development"
                            displayType="BALLOON"
                            key="notification.group.name"/>
+
+        <!-- Inspections -->
+        <localInspection language="JSON"
+                         groupName="Hytale"
+                         displayName="Main class validation"
+                         shortName="HytaleManifestMainClass"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         implementationClass="com.criticalrange.hytaledev.inspection.ManifestMainClassInspection"/>
+
+        <localInspection language="JSON"
+                         groupName="Hytale"
+                         displayName="Required fields validation"
+                         shortName="HytaleManifestRequiredFields"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         implementationClass="com.criticalrange.hytaledev.inspection.ManifestRequiredFieldsInspection"/>
+
+        <localInspection language="JAVA"
+                         groupName="Hytale"
+                         displayName="Plugin class structure"
+                         shortName="HytalePluginClass"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="com.criticalrange.hytaledev.inspection.PluginClassInspection"/>
     </extensions>
 </idea-plugin>

@@ -22,4 +22,9 @@ object HytaleAssets {
      * Manifest file icon (16x16).
      */
     val MANIFEST_ICON: Icon = IconLoader.getIcon("/icons/manifest.svg", HytaleAssets::class.java)
+
+    /**
+     * Event listener icon (16x16).
+     */
+    val LISTENER_ICON: Icon = IconLoader.getIcon("/icons/listener.svg", HytaleAssets::class.java)
 }
