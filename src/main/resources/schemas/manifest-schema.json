@@ -4,13 +4,13 @@
   "title": "Hytale Plugin Manifest",
   "description": "Schema for Hytale plugin manifest.json files",
   "type": "object",
-  "required": ["Group", "Name", "Version", "Main"],
+  "required": ["Group", "Name", "Version"],
   "properties": {
     "Group": {
       "type": "string",
-      "description": "The group/organization identifier (e.g., 'dev.hytalemodding')",
-      "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)*$",
-      "examples": ["dev.hytalemodding", "com.example"]
+      "description": "The group/identifier",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+      "examples": ["Hytale", "YourName"]
     },
     "Name": {
       "type": "string",
@@ -44,9 +44,20 @@
             "type": "string",
             "format": "email",
             "description": "Author's email address"
+          },
+          "Url": {
+            "type": "string",
+            "format": "email",
+            "description": "Author's url"
           }
         }
       }
+    },
+    "Website": {
+      "type": "string",
+      "format": "uri",
+      "description": "The plugin's website",
+      "examples": ["https://hytalemodding.dev"]
     },
     "Main": {
       "type": "string",
@@ -73,6 +84,21 @@
       "additionalProperties": {
         "type": "string"
       }
+    },
+    "LoadBefore": {
+      "type": "object",
+      "description": "Load before plugin dependencies (name -> version)",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "DisabledByDefault": {
+      "type": "boolean",
+      "description": "If the plugin should default to being disabled (default false)"
+    },
+    "IncludesAssetPack": {
+      "type": "boolean",
+      "description": "If the plugin includes an asset pack (default false)"
     }
   },
   "additionalProperties": true
